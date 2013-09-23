@@ -1,0 +1,23 @@
+{
+    "name": "ellipsesynergie/laravel-command",
+    "description": "",
+    "authors": [
+        {
+            "name": "Maxime Beaudoin",
+            "email": "maxime.beaudoin@ellipse-synergie.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "EllipseSynergie\\LaravelCommand": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -48,8 +48,7 @@ class LaravelCommandServiceProvider extends ServiceProvider {
 		//Add commands
 		$this->commands(
 			'ellipse:minifycss',
-			'ellipse:minifyjs',
-			'ellipse:pushtostatic'
+			'ellipse:minifyjs'
 		);
 	}
 

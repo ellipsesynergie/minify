@@ -45,12 +45,6 @@ class LaravelCommandServiceProvider extends ServiceProvider {
 			return new Command\MinifyJsCommand($app);
 		});
 		
-		//Add command to the application
-		$this->app['ellipse:pushtostatic'] = $this->app->share(function($app)
-		{
-			return new Command\PushStaticToStorageCommand($app);
-		});
-		
 		//Add commands
 		$this->commands(
 			'ellipse:minifycss',

@@ -37,3 +37,11 @@ To configure the package to meet your needs, you must publish the configuration 
 ```bash
 php artisan config:publish ellipsesynergie/laravel-command
 ```
+
+##Available commands
+
+Minify and packing CSS.
+`php artisan ellipse:minifycss`
+
+Minify and packing Javascript. (Required uglifyjs to work)
+`php artisan ellipse:minifyjs`

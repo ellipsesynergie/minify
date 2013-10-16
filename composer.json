@@ -1,6 +1,6 @@
 {
 	"name": "ellipsesynergie/minify",
-	"description": "This package contain some command to minify css and javascript. This package only work with Laravel 4.",
+	"description": "This package contain some command to minify css and javascript. This package currently work only with Laravel 4.",
 	"keywords": ["minify", "laravel", "command", "css", "javascript"],
 	"license": "MIT",
 	"authors": [

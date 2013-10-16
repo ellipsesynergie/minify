@@ -1,4 +1,4 @@
-<?php namespace EllipseSynergie\LaravelCommand;
+<?php namespace EllipseSynergie\Minify;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
  *
  * @author Maxime Beaudoin <maxime.beaudoin@ellipse-synergie.com>
  */
-class LaravelCommandServiceProvider extends ServiceProvider {
+class MinifyServiceProvider extends ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.

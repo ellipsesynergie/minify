@@ -1,4 +1,4 @@
-<?php namespace EllipseSynergie\LaravelCommand\Command;
+<?php namespace EllipseSynergie\Minify\Command;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -12,32 +12,32 @@ use Illuminate\Support\Facades\File;
  * @author Maxime Beaudoin <maxime.beaudoin@ellipse-synergie.com>
  * @author Dominic Martineau <dominic.martineau@ellipse-synergie.com>
  */
-class MinifyCssCommand extends Command {
+class MinifyJsCommand extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'ellipse:minifycss';
+	protected $name = 'ellipse:minifyjs';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Minify and packing CSS.';
+	protected $description = 'Minify and packing Javascript.';
 
 	/**
-	 * Path to assets folder
+	 * Path to assets directory
 	 *
 	 * @var string
 	 */
 	protected $_assetsDirectory;
 
 	/**
-	 * Path to css folder
-	 *
+	 * Path to javascript directories
+	 * 
 	 * @var string
 	 */
 	protected $_directories;
@@ -49,16 +49,25 @@ class MinifyCssCommand extends Command {
 	 */
 	public function fire()
 	{
-		//Get config
-		$this->_assetsDirectory = Config::get('laravel-command::minify.assetsDirectory');
-		$this->_directories = Config::get('laravel-command::minify.css.directories');
+		// Validate that minify script is installed
+		$returnVal = shell_exec("which uglifyjs");
 		
-		//Try to minify CSS
-		$result = $this->_minify();
-		
-		//If the minicy success, pack thme
-		if($result){
-			if($this->_pack()) $this->info('Packing success');
+		if (!empty($returnVal)) {
+			
+			$this->_assetsDirectory = Config::get('laravel-command::minify.assetsDirectory');
+			$this->_directories = Config::get('laravel-command::minify.js.directories');
+
+			//Try to minify CSS
+			$result = $this->_minify();
+			
+			//If the minicy success, pack thme
+			if($result){
+				if($this->_pack()) $this->info('Packing success');
+			}
+
+		} else {
+
+			$this->error("You should install uglifyjs first! (see https://github.com/mishoo/UglifyJS2)");
 		}
 	}
 
@@ -69,10 +78,10 @@ class MinifyCssCommand extends Command {
 	private function _minify()
 	{
 		$this->info("Minifying...");
-		
+			
 		//If we don't have directories to scan
 		if(empty($this->_directories)){
-			$this->error('No css directories to scan');
+			$this->error('No javascript directories to scan');
 			return false;
 		}
 
@@ -82,14 +91,12 @@ class MinifyCssCommand extends Command {
 
 				$in = $file->getPathname();
 
-				if ($file->getExtension() == 'css' && 
-					substr($in, -8) != '.min.css' && 
-					substr($in, -9) != '.pack.css') {
+				if ($file->getExtension() == 'js' && 
+					substr($in, -7) != '.min.js' && 
+					substr($in, -8) != '.pack.js') {
 
-					$out = str_replace('.css', '.min.css', $file->getPathname());
-					$command = 'cat ' . $in . ' | sed -e \'s/^[ \t]*//g; s/[ \t]*$//g; s/\([:{;,]\) /\1/g; s/ {/{/g; s/\/\*.*\*\///g; /^$/d\' | sed -e :a -e \'$!N; s/\n\(.\)/\1/; ta\' > ' . $out;
-					
-					shell_exec($command);
+					$out = str_replace('.js', '.min.js', $file->getPathname());
+					shell_exec("uglifyjs " . $in . " -c -o " . $out);
 
 					$this->line("\t" . $in . " → " . $out);
 				}
@@ -106,13 +113,12 @@ class MinifyCssCommand extends Command {
 	 */
 	private function _pack()
 	{
-		
 		//Get package
-		$packages = Config::get('laravel-command::minify.css.packages');
+		$packages = Config::get('laravel-command::minify.js.packages');
 		
 		//If we don't have packages to scan
 		if(empty($packages)){
-			$this->error('No CSS packages to create');
+			$this->error('No Javascript packages to create');
 			return false;
 		}
 		
@@ -132,8 +138,7 @@ class MinifyCssCommand extends Command {
 				File::append($package, File::get($file));
 			}
 		}
-		
-		return true;
 
 	} // _pack()
+
 }

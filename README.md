@@ -1,6 +1,6 @@
-# Laravel Commands
+# Minify
 
-This package contain some command to minify css and javascript, push static file to storage. This package only work with Laravel 4.
+This package contain some command to minify css and javascript. This currently work only with Laravel 4.
 
 ### Status
 

@@ -54,8 +54,8 @@ class MinifyJsCommand extends Command {
 		
 		if (!empty($returnVal)) {
 			
-			$this->_assetsDirectory = Config::get('laravel-command::minify.assetsDirectory');
-			$this->_directories = Config::get('laravel-command::minify.js.directories');
+			$this->_assetsDirectory = Config::get('minify::minify.assetsDirectory');
+			$this->_directories = Config::get('minify::minify.js.directories');
 
 			//Try to minify CSS
 			$result = $this->_minify();
@@ -114,7 +114,7 @@ class MinifyJsCommand extends Command {
 	private function _pack()
 	{
 		//Get package
-		$packages = Config::get('laravel-command::minify.js.packages');
+		$packages = Config::get('minify::minify.js.packages');
 		
 		//If we don't have packages to scan
 		if(empty($packages)){

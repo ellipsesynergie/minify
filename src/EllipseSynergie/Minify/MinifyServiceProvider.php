@@ -23,7 +23,7 @@ class MinifyServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('ellipsesynergie/laravel-command');
+		$this->package('ellipsesynergie/minify');
 	}
 
 	/**
